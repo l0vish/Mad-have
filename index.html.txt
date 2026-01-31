@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Mad-have | Resume Builder</title>
+<style>
+body {
+  background: radial-gradient(circle at top, #0ff, #000);
+  font-family: Arial;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  background: rgba(0,0,0,0.75);
+  padding: 25px;
+  width: 400px;
+  border-radius: 16px;
+}
+input, textarea, button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+}
+button {
+  background: cyan;
+  font-weight: bold;
+}
+pre {
+  margin-top: 15px;
+  white-space: pre-wrap;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Mad-have</h1>
+<p>AI Resume Builder</p>
+
+<input id="name" placeholder="Full Name">
+<input id="role" placeholder="Job Role">
+<textarea id="skills" placeholder="Skills"></textarea>
+<textarea id="exp" placeholder="Experience"></textarea>
+
+<button onclick="generate()">Generate Resume</button>
+
+<pre id="output"></pre>
+</div>
+
+<script>
+async function generate() {
+  const data = {
+    name: name.value,
+    role: role.value,
+    skills: skills.value,
+    experience: exp.value
+  };
+
+  const res = await fetch("/api/resume", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  output.textContent = result.resume;
+}
+</script>
+
+</body>
+</html>

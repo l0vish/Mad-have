@@ -1,0 +1,23 @@
+export default function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST allowed" });
+  }
+
+  const { name, role, skills, experience } = req.body;
+
+  const resume = `
+${name}
+${role}
+
+SUMMARY:
+Motivated candidate seeking a ${role} position.
+
+SKILLS:
+${skills}
+
+EXPERIENCE:
+${experience}
+`;
+
+  res.status(200).json({ resume });
+}
